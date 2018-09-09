@@ -16,8 +16,14 @@ install:
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
+  # generate CA key
+  - sudo openssl genrsa -out /etc/ssl/ca.key 2048
+
+  # generate CA cert
+  - sudo openssl req -new -x509 -key /etc/ssl/ca.key -subj "/CN=Snakeoil CA" -out /etc/ssl/ca.crt -days 365 -config tests/ssl-ca.conf
+
   # generate SSL keys
-  - sudo openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/elk.key -out /etc/ssl/elk.crt -subj "/C=US/ST=New York/L=New York/O=Test Organization/OU=Unit/CN=elk.example.com/emailAddress=sysadmin@example.com"
+  - sudo openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/elk.key -out /etc/ssl/elk.crt -subj "/C=US/ST=New York/L=New York/O=Test Organization/OU=Unit/CN=elk.example.com/emailAddress=sysadmin@example.com" -config tests/ssl.conf
 
 script:
   # Check the role/playbook's syntax.
