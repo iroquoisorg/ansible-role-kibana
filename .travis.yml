@@ -17,6 +17,9 @@ install:
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
+  # Install required roles
+  - ansible-galaxy install -r tests/requirements.yml --roles-path ../
+
   # generate CA key
   - sudo openssl genrsa -out /etc/ssl/ca.key 2048
 
