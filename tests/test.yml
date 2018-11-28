@@ -6,5 +6,5 @@
     elk_beat_forwarder_key: /etc/ssl/elk.key
     elk_ca_cert: /etc/ssl/ca.crt
   roles:
-    - elasticsearch
+    - iroquoisorg.elasticsearch
     - ansible-role-kibana
